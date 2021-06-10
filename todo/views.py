@@ -1,18 +1,25 @@
+from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+from django.db.models import Q
+from django.contrib import messages
 
 from .models import *
 from .forms import homeworkForm
-from .filters import CourseFilter
+from .filters import *
 
 def index(request) :
     course_list = Course.objects.all()
+    hw_list = Homework.objects.all()
 
-    myFilter = CourseFilter(request.GET, queryset=course_list)
-    course_list = myFilter.qs
+    cFilter = CourseFilter(request.GET, queryset=course_list)
+    course_list = cFilter.qs
 
-    context = {'course_list' : course_list, 'myFilter' : myFilter}
+    context = {
+        'course_list' : course_list,
+        'hw_list' : hw_list,
+        'cFilter' : cFilter,
+        }
     return render(request, 'todo/index.html', context)
 
 def detail(request, homework_id) :
@@ -45,7 +52,7 @@ def updateForm(request, homework_id) :
     context = {'form' : form}
     return render(request, 'todo/form.html', context)
 
-def deleteForm(request, homework_id) :
+def deleteForm(homework_id) :
     homework = get_object_or_404(Homework, pk=homework_id)
     homework.delete()
     return redirect(reverse('todo:index'))
