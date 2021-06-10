@@ -4,32 +4,44 @@
         <title>to do list</title>
 
         <style>
+            a {text-decoration: none; color: gray}
+            body {
+                text-align: center;
+            }
             table {
-              border: 1px solid gray;
-              border-radius: 10px;
-              border-collapse: collapse;
+                display: inline-block;
+                border-collapse: collapse;
+                width: 60%;
             }
             td {
-              text-align: center;
-              padding: 10px;
-              height: 20px;
+                border: 1px solid gray;
+                text-align: center;
+                padding: 10px;
+                height: 20px;
             }
             .info {
-              background-color: rgb(157, 215, 218);
+                background-color: whitesmoke;
+            }
+            .btn {
+                border-radius: 5px;
+                border: 1px solid gray;
+                width: 70px;
+                height: 30px;
+                background-color: whitesmoke;
             }
         </style>
     </head>
 
     <body>
-        <h1>To do list</h1>
+        <h1><a href="{% url 'todo:index' %}">&ltTo do list&gt</a></h1>
         {% if course_list %}
         <form method='get'>
             {{myFilter.form}}
-            <input type='submit' value='검색'>
-            <a href="{% url 'todo:createForm' %}"><input type='button' value='추가'></a>
+            <input type='submit' class='btn' value='검색'>
+            <a href="{% url 'todo:createForm' %}"><input type='button' class='btn' value='추가'></a>
         </form>
         <br>
-        <table border='1'>
+        <table>
             <tr>
             <td class='info'>과목명</td>
             <td class='info'>과제명</td>
