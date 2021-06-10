@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+    <head>
+        <title>to do list</title>
+
+        <style>
+            table {
+              border: 1px solid gray;
+              border-radius: 10px;
+              border-collapse: collapse;
+            }
+            td {
+              text-align: center;
+              padding: 10px;
+              height: 20px;
+            }
+            .info {
+              background-color: rgb(157, 215, 218);
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>To do list</h1>
+        {% if course_list %}
+        <form method='get'>
+            {{myFilter.form}}
+            <input type='submit' value='검색'>
+            <a href="{% url 'todo:createForm' %}"><input type='button' value='추가'></a>
+        </form>
+        <br>
+        <table border='1'>
+            <tr>
+            <td class='info'>과목명</td>
+            <td class='info'>과제명</td>
+            <td class='info'>과제설명</td>
+            <td class='info'>완료</td>
+            </tr>
+            {% for course in course_list %}
+            {% for hw in course.homework_set.all %}
+            <tr>
+                <td>{{ hw.cname }}</td>
+                <td>
+                <a href="{% url 'todo:detail' hw.id %}">{{ hw.title }}</a>
+                </td>
+                <td>{{ hw.desc }}</td>
+                <td>{{ hw.done }}</td>
+            </tr>
+            {% endfor %}
+            {% endfor %}
+        </table>
+    {% else %}
+    <p>No courses are available.</p>
+    {% endif %}
+    </body>
+</html>

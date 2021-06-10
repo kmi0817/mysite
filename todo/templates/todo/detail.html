@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+    <head>
+        <title>to do list</title>
+
+        <style>
+            table {
+              border: 1px solid gray;
+              border-radius: 10px;
+              border-collapse: collapse;
+            }
+            td {
+              text-align: center;
+              padding: 10px;
+              height: 20px;
+            }
+            .info {
+              background-color: rgb(157, 215, 218);
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>{{ hw.title }}</h1>
+        <form action="{% url 'todo:deleteForm' hw.id %}" method='POST' onsubmit="if(!confirm('삭제하시겠습니까?')){return false}">
+            {% csrf_token %}
+            <a href='{% url "todo:updateForm" hw.id %}'><input type='button' value='수정'></a>
+            <input type='submit' value='삭제'>
+        </form>
+        <table border='1'>
+            <tr>
+                <td class='info' >과제명</td>
+                <td class='article'>{{hw.title}}</td>
+            </tr>
+            <tr>
+                <td class='info'>과제 설명</td>
+                <td class='article'>{{hw.desc}}</td>
+            </tr>
+            <tr>
+                <td class='info'>완성</td>
+                <td class='article'>{{hw.done}}</td>
+            </tr>
+        </table>
+    </body>
+</html>
